@@ -504,20 +504,20 @@ footer strong{color:var(--silver)}
         <div class="console" aria-live="polite">
           <div class="con-head">
             <div><h3 id="agName">Agent</h3><p id="agDesc"></p></div>
-            <span class="pill">Demo · sample account</span>
+            <span class="pill">AI · sample account</span>
           </div>
           <div class="con-body" id="conBody"></div>
           <div class="con-foot">
             <div class="chips" id="agPrompts" aria-label="Suggested questions"></div>
             <form id="agForm">
               <label for="agInput" hidden>Ask the agent</label>
-              <input id="agInput" autocomplete="off" placeholder="Ask about drawdown, sizing, payouts, news…">
+              <input id="agInput" autocomplete="off" maxlength="600" placeholder="Ask about drawdown, sizing, payouts, news…">
               <button class="btn btn-gold" type="submit">Ask</button>
             </form>
           </div>
         </div>
       </div>
-      <p class="note">The demo runs in your browser on a sample account that follows the Otto Funded plan and size you picked above, and your Challenge Planner and Otto Quant inputs. It is not connected to a live account and is not investment advice.</p>
+      <p class="note">Typed questions are answered by AI; suggested questions are worked out instantly in your browser. Both use a sample account that follows the Otto Funded plan and size you picked above, and your Challenge Planner and Otto Quant inputs. AI answers can be wrong, the account is not live, and nothing here is investment advice.</p>
 
       <div class="subhead">
         <p class="eyebrow">Playbooks</p>
@@ -854,11 +854,35 @@ footer strong{color:var(--silver)}
     lis.forEach((l,k)=>setTimeout(()=>{if(id===runId)l.classList.add("done")},260*(k+1)));
     setTimeout(finish,260*(lis.length+1));
   }
-  $("#agForm").onsubmit=e=>{e.preventDefault();const q=$("#agInput").value.trim();if(!q)return;
-    const hit=ROUTES.find(r=>r[0].test(q.toLowerCase()));
-    if(hit){select(AGENTS.find(a=>a.id===hit[1]));ask(hit[2],q)}
-    else{runId++;$("#conBody").innerHTML=`<div class="ask">${q.replace(/[<>&]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]))}</div><div class="answer"><p>This demo answers questions about drawdown, sizing, your journal, payouts, news and strategies. Try one of the suggested questions below.</p></div>`}
-    $("#agInput").value=""};
+  const esc=t=>t.replace(/[<>&]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
+  function snapshot(){
+    const a=account(),v={};ids.forEach(i=>v[i]=parseFloat(el[i].value));const r=n=>Math.round(n);
+    return {plan:a.plan,accountSize:a.size,startOfDayBalance:r(a.sod),equity:r(a.equity),dailyLossFloor:r(a.dailyFloor),overallLossFloor:r(a.overallFloor),
+      roomLeftToday:r(a.roomDay),roomLeftOverall:r(a.roomAll),daysSinceFunded:16,netProfit:r(a.size*0.046),bestDayShareOfProfit:"34%",
+      planner:{ruleProfile:$("#preset").selectedOptions[0].text,targetPct:v.target,dailyLimitPct:v.daily,maxLossPct:v.maxdd,riskPerTradePct:v.risk,winRatePct:v.win,rewardToRisk:v.rr,tradesPerDay:v.tpd,simulatedPassRate:$("#kPass").textContent},
+      quant:{idea:$("#idea").value.slice(0,500),spec:$("#sCode").textContent.slice(0,800)},
+      upcomingEvents:["US CPI in 1h 40m","ECB President speaks in 4h 10m","FOMC minutes tomorrow 19:00 UTC"]};
+  }
+  async function askAI(q){
+    const id=++runId,body=$("#conBody");
+    body.innerHTML=`<div class="ask">${esc(q)}</div><ol class="steps"><li class="done">Load ${current.name} context: plan, account, planner and strategy</li><li>Thinking…</li></ol>`;
+    try{
+      const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),45000);
+      const res=await fetch("/api/agent",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({agent:current.id,question:q,context:snapshot()}),signal:ctrl.signal});
+      clearTimeout(timer);
+      if(!res.ok)throw new Error(res.status);
+      const data=await res.json();if(id!==runId)return;
+      body.querySelectorAll(".steps li").forEach(l=>l.classList.add("done"));
+      body.querySelector(".steps li:last-child").textContent="Answer from the program rules and your sample account";
+      body.insertAdjacentHTML("beforeend",`<div class="answer">${esc(data.answer||"").split(/\n{2,}/).map(p=>`<p>${p.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\n/g,"<br>")}</p>`).join("")}</div><details class="receipt"><summary>Receipt · AI answer · 4 sources</summary><ul><li>Source: ${esc(account().plan)} rule profile</li><li>Source: sample account snapshot</li><li>Source: Challenge Planner inputs</li><li>Source: Otto Quant idea</li><li><span class="ok">✓</span> AI-generated; check the numbers before acting</li></ul></details>`);
+    }catch(err){
+      if(id!==runId)return;
+      const hit=ROUTES.find(r=>r[0].test(q.toLowerCase()));
+      if(hit){select(AGENTS.find(a=>a.id===hit[1]));ask(hit[2],q)}
+      else{runId++;body.innerHTML=`<div class="ask">${esc(q)}</div><div class="answer"><p>The agents can answer questions about drawdown, sizing, your journal, payouts, news and strategies. Try one of the suggested questions below.</p></div>`}
+    }
+  }
+  $("#agForm").onsubmit=e=>{e.preventDefault();const q=$("#agInput").value.trim();if(!q)return;askAI(q.slice(0,600));$("#agInput").value=""};
   select(AGENTS[0]);ask(0);
 
   /* ---------- Playbooks ---------- */
