@@ -71,7 +71,7 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;backgroun
 .brand b{font:600 1.25rem/1 var(--font-mark);color:var(--gold);letter-spacing:.06em}
 .brand span{font:500 .72rem/1 var(--font-mark);color:var(--silver);letter-spacing:.32em;margin-left:2px}
 nav.main{display:flex;gap:4px;flex-wrap:wrap}
-nav.main a{color:var(--silver);text-decoration:none;font-size:.9rem;padding:8px 10px;border-radius:6px}
+nav.main a{color:var(--silver);text-decoration:none;white-space:nowrap;font-size:.9rem;padding:8px 10px;border-radius:6px}
 nav.main a:hover{color:var(--fg);background:var(--panel)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 .92rem/1 var(--font-body);padding:13px 20px;border-radius:6px;border:1px solid transparent;cursor:pointer;text-decoration:none;transition:filter .15s,background .15s}
 .btn-gold{background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#1a1408}
@@ -198,6 +198,81 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 @media (max-width:900px){.builder{grid-template-columns:1fr}}
 @media (max-width:480px){.spec dl{grid-template-columns:1fr}.spec dt{border-bottom:0;padding-bottom:0}.row2{grid-template-columns:1fr}}
 
+/* agents */
+.tenets{display:grid;grid-template-columns:repeat(3,1fr);gap:24px 32px;margin-bottom:40px}
+.tenets>div{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:6px;align-content:start}
+.tenets b{font-family:var(--font-display);font-size:1.3rem;font-weight:600}
+.tenets span{color:var(--muted);font-size:.92rem}
+@media (max-width:820px){.tenets{grid-template-columns:1fr}}
+.desk{display:grid;grid-template-columns:290px 1fr;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.desk>*{min-width:0}
+.roster{margin:0;padding:8px;list-style:none;display:grid;gap:2px;align-content:start;background:var(--bg);border-right:1px solid var(--line)}
+.roster button{width:100%;text-align:left;background:transparent;border:0;border-radius:8px;padding:12px;cursor:pointer;color:var(--fg);display:grid;gap:3px;font:inherit}
+.roster button:hover{background:var(--panel)}
+.roster button[aria-pressed="true"]{background:var(--panel);box-shadow:inset 2px 0 0 var(--gold)}
+.roster b{font-family:var(--font-display);font-size:1.15rem;font-weight:600}
+.roster button[aria-pressed="true"] b{color:var(--gold-hi)}
+.roster span{font-size:.8rem;color:var(--muted);line-height:1.4}
+.roster .tag{font:500 .68rem/1 var(--font-data);color:var(--silver);letter-spacing:.08em;text-transform:uppercase}
+.console{display:grid;grid-template-rows:auto 1fr auto;min-height:520px}
+.con-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.con-head h3{font-size:1.35rem}
+.con-head p{font-size:.85rem;color:var(--muted);margin-top:2px}
+.con-body{padding:18px;display:grid;gap:14px;align-content:start;overflow-wrap:anywhere}
+.ask{justify-self:end;max-width:85%;background:var(--bg);border:1px solid var(--line);border-radius:10px 10px 2px 10px;padding:10px 14px;font-size:.93rem}
+.steps{margin:0;padding:0;list-style:none;display:grid;gap:6px;font:13px/1.5 var(--font-data);color:var(--muted)}
+.steps li{display:flex;gap:10px;align-items:baseline}
+.steps li::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;border:1px solid var(--gold);transform:translateY(-1px)}
+.steps li.done::before{background:var(--gold)}
+.steps li.done{color:var(--silver)}
+.answer{border-left:2px solid var(--gold);padding:2px 0 2px 14px;display:grid;gap:10px;font-size:.95rem}
+.answer strong{color:var(--gold-hi);font-weight:600}
+.answer .figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.answer .figs div{border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--bg);display:grid;gap:3px}
+.answer .figs span{font-size:.74rem;color:var(--muted)}
+.answer .figs b{font:500 1.15rem/1.1 var(--font-data);font-variant-numeric:tabular-nums}
+.answer .good{color:var(--good)}
+.answer .bad{color:var(--bad)}
+.receipt{border:1px solid var(--line);border-radius:8px;background:var(--bg-deep);font-size:.84rem}
+.receipt summary{cursor:pointer;padding:10px 12px;color:var(--silver);font:500 .78rem/1.2 var(--font-data);letter-spacing:.04em}
+.receipt ul{margin:0;padding:0 12px 12px 28px;color:var(--muted);display:grid;gap:4px}
+.receipt .ok{color:var(--good)}
+.con-foot{border-top:1px solid var(--line);padding:14px 18px;display:grid;gap:10px;background:var(--bg-deep)}
+.con-foot form{display:flex;gap:8px}
+.con-foot input{flex:1;min-width:0;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:11px 12px;font:inherit;font-size:.93rem}
+.con-foot .btn{padding:11px 16px}
+@media (max-width:900px){.desk{grid-template-columns:1fr}.roster{border-right:0;border-bottom:1px solid var(--line);grid-auto-flow:column;grid-auto-columns:minmax(190px,1fr);overflow-x:auto}.roster button[aria-pressed="true"]{box-shadow:inset 0 -2px 0 var(--gold)}.console{min-height:0}.ask{max-width:100%}}
+.subhead{display:grid;gap:10px;margin:64px 0 24px}
+.subhead h3{font-size:clamp(1.6rem,3vw,2.1rem)}
+.playbook{display:grid;grid-template-columns:320px 1fr;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.playbook>*{min-width:0}
+.pb-form{padding:22px;display:grid;gap:16px;align-content:start;background:var(--bg-deep);border-right:1px solid var(--line)}
+.pb-form fieldset{border:0;margin:0;padding:0;display:grid;gap:8px}
+.pb-form legend{font-size:.82rem;color:var(--muted);margin-bottom:6px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--silver);cursor:pointer}
+.check input{accent-color:var(--gold);margin-top:4px}
+.pb-out{padding:22px;display:grid;gap:18px;align-content:start}
+.flow{margin:0;padding:0;list-style:none;display:grid;gap:0}
+.flow li{position:relative;display:grid;grid-template-columns:34px 1fr;gap:12px;padding-bottom:18px}
+.flow li:not(:last-child)::after{content:"";position:absolute;left:16px;top:34px;bottom:0;width:1px;background:var(--line)}
+.flow i{font:500 .75rem/34px var(--font-data);font-style:normal;text-align:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--gold);color:var(--gold-hi);background:var(--bg)}
+.flow li.trigger i{background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#1a1408;border-color:transparent}
+.flow li.human i{border-style:dashed;border-color:var(--silver);color:var(--silver)}
+.flow b{display:block;font-weight:500}
+.flow span{font-size:.84rem;color:var(--muted)}
+.pb-sum{font-size:.92rem;color:var(--silver);border-left:2px solid var(--gold);padding-left:12px}
+@media (max-width:900px){.playbook{grid-template-columns:1fr}.pb-form{border-right:0;border-bottom:1px solid var(--line)}}
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.versus>div{background:var(--bg);padding:22px 24px;display:grid;gap:12px;align-content:start}
+.versus>div:last-child{background:var(--panel)}
+.versus h4{margin:0;font:600 .78rem/1 var(--font-mark);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.versus>div:last-child h4{color:var(--gold)}
+.versus ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;font-size:.93rem;color:var(--silver)}
+.versus li{padding-left:18px;position:relative}
+.versus li::before{content:"–";position:absolute;left:0;color:var(--muted)}
+.versus>div:last-child li::before{content:"";width:6px;height:6px;background:var(--gold);transform:rotate(45deg);top:.6em}
+@media (max-width:760px){.versus{grid-template-columns:1fr}}
+
 /* faq + footer */
 .faq{display:grid;gap:0;border-top:1px solid var(--line);max-width:860px}
 .faq details{border-bottom:1px solid var(--line);padding:4px 0}
@@ -228,6 +303,7 @@ footer strong{color:var(--silver)}
       <a href="#funded">Otto Funded</a>
       <a href="#toolkit">Challenge Toolkit</a>
       <a href="#quant">AI Trading</a>
+      <a href="#agents">AI Agents</a>
       <a href="#faq">FAQ</a>
     </nav>
     <a class="btn btn-gold" href="#funded">Start a challenge</a>
@@ -408,7 +484,91 @@ footer strong{color:var(--silver)}
     </div>
   </section>
 
-  <section class="chapter" id="faq">
+  <!-- AGENTS -->
+  <section class="chapter" id="agents">
+    <div class="wrap">
+      <div class="chap-head">
+        <p class="eyebrow">Otto Agents</p>
+        <h2>A desk of AI agents that know your rulebook</h2>
+        <p class="lede">Each agent does one job for a funded trader: guarding drawdown, coaching your sizing, reading your journal, clearing payouts. They answer from your account and your firm's exact rules, show every check they ran, and never touch an order without your say-so.</p>
+      </div>
+
+      <div class="tenets">
+        <div><b>Answers from your rules</b><span>Agents read the rule profile of the program you're trading and your live account numbers, not general trading advice.</span></div>
+        <div><b>Every answer has a receipt</b><span>Open any reply to see the data it used and the checks it passed, so you can verify it before you act on it.</span></div>
+        <div><b>You approve the actions</b><span>Agents can suggest a size, a pause or a payout request. Anything that changes an order waits for your confirmation.</span></div>
+      </div>
+
+      <div class="desk">
+        <ul class="roster" id="roster" aria-label="Agents"></ul>
+        <div class="console" aria-live="polite">
+          <div class="con-head">
+            <div><h3 id="agName">Agent</h3><p id="agDesc"></p></div>
+            <span class="pill">AI · sample account</span>
+          </div>
+          <div class="con-body" id="conBody"></div>
+          <div class="con-foot">
+            <div class="chips" id="agPrompts" aria-label="Suggested questions"></div>
+            <form id="agForm">
+              <label for="agInput" hidden>Ask the agent</label>
+              <input id="agInput" autocomplete="off" maxlength="600" placeholder="Ask about drawdown, sizing, payouts, news…">
+              <button class="btn btn-gold" type="submit">Ask</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <p class="note">Typed questions are answered by AI; suggested questions are worked out instantly in your browser. Both use a sample account that follows the Otto Funded plan and size you picked above, and your Challenge Planner and Otto Quant inputs. AI answers can be wrong, the account is not live, and nothing here is investment advice.</p>
+
+      <div class="subhead">
+        <p class="eyebrow">Playbooks</p>
+        <h3>Chain agents into a routine that runs itself</h3>
+        <p class="lede">Pick a trigger, choose which agents run, and decide where you want to sign off. No code.</p>
+      </div>
+      <div class="playbook">
+        <form class="pb-form" id="pbForm" onsubmit="return false">
+          <div class="field">
+            <label for="pbTrigger">When this happens</label>
+            <select id="pbTrigger">
+              <option value="open">The trading session opens</option>
+              <option value="dd">Equity drops 2% on the day</option>
+              <option value="close">A trade closes</option>
+              <option value="payout">I'm about to request a payout</option>
+            </select>
+          </div>
+          <fieldset id="pbSteps"><legend>Run these agents</legend></fieldset>
+          <label class="check"><input type="checkbox" id="pbHuman" checked> Ask me before anything that changes orders</label>
+          <button class="btn btn-ghost" type="button" id="pbSave">Save playbook</button>
+        </form>
+        <div class="pb-out">
+          <ol class="flow" id="pbFlow"></ol>
+          <p class="pb-sum" id="pbSum"></p>
+        </div>
+      </div>
+
+      <div class="subhead">
+        <p class="eyebrow">The difference</p>
+        <h3>What a challenge day looks like</h3>
+      </div>
+      <div class="versus">
+        <div><h4>On your own</h4><ul>
+          <li>Recalculate the daily limit by hand from start-of-day balance</li>
+          <li>Guess lot size from the last trade</li>
+          <li>Find out about CPI when the candle prints</li>
+          <li>Reread the payout terms before every request</li>
+          <li>Notice a losing pattern after the account is gone</li>
+        </ul></div>
+        <div><h4>With Otto Agents</h4><ul>
+          <li>Rule Guardian shows the exact dollars left today and overall</li>
+          <li>Challenge Coach sizes each trade from the room you have left</li>
+          <li>News Sentinel flags restricted events hours ahead</li>
+          <li>Payout Desk checks every condition and drafts the request</li>
+          <li>Journal Analyst tags each trade and shows where your edge is</li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter alt" id="faq">
     <div class="wrap">
       <div class="chap-head"><p class="eyebrow">Questions</p><h2>Before you start</h2></div>
       <div class="faq">
@@ -416,6 +576,7 @@ footer strong{color:var(--silver)}
         <details><summary>What happens if I break a rule?</summary><p>Hitting the daily or overall loss limit ends that account. You can start a new evaluation at a 15% discount within 7 days.</p></details>
         <details><summary>Can I use the Challenge Toolkit at other prop firms?</summary><p>Yes, as long as that firm allows it. The toolkit is a risk manager and planner. Several firms prohibit expert advisors, copy trading or trade-management software, so check each program's terms first. Otto Funded allows the toolkit on every account.</p></details>
         <details><summary>Will Otto Quant make me profitable?</summary><p>No tool can promise that. Otto Quant helps you state a strategy precisely and test it honestly. Many ideas fail in backtesting, and that is a useful result that costs you nothing.</p></details>
+        <details><summary>Can Otto Agents place trades for me?</summary><p>No. Agents read your account and rules, explain what they found and suggest a next step. Anything that would open, close or resize a position needs your confirmation, and you can turn agents off at any time.</p></details>
         <details><summary>When are payouts sent?</summary><p>You can request a payout every 14 days once funded. Requests are reviewed and paid within two business days by bank transfer or USDC.</p></details>
       </div>
     </div>
@@ -588,6 +749,163 @@ footer strong{color:var(--silver)}
       `<text x="${W-8}" y="${H-4}" text-anchor="end" fill="#a3b0c2" font-size="11" font-family="IBM Plex Mono,monospace">${n} trades · ${last>=0?"+":""}${last.toFixed(1)}R (sample)</text>`;
   }
   generate();
+
+  /* ---------- Agents ---------- */
+  const fmtUsd=n=>(n<0?"−$":"$")+Math.abs(Math.round(n)).toLocaleString("en-US");
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fig=(label,val,cls)=>`<div><span>${label}</span><b${cls?` class="${cls}"`:""}>${val}</b></div>`;
+  function account(){
+    const size=SIZES[sizeIdx],one=type==="one";
+    const sod=size*1.021,equity=sod-size*0.012,hwm=size*1.03;
+    const dailyPct=one?3:5;
+    const dailyFloor=sod*(1-dailyPct/100);
+    const overallFloor=one?Math.min(size,hwm-size*0.06):size*0.9;
+    return {size,one,plan:PLANS[type].name,sod,equity,dailyPct,dailyFloor,overallFloor,
+      roomDay:equity-dailyFloor,roomAll:equity-overallFloor,split:one?0.9:0.8};
+  }
+  function simulate(v,n){
+    const R=rng(7),p=v.win/100;let pass=0;
+    for(let s=0;s<n;s++){let eq=0,res="";
+      for(let d=1;d<=60&&!res;d++){const sod=eq;
+        for(let t=0;t<v.tpd;t++){eq+=R()<p?v.risk*v.rr:-v.risk;
+          if(eq<=-v.maxdd){res="max";break}if(sod-eq>=v.daily){res="daily";break}if(eq>=v.target){res="pass";break}}}
+      if(res==="pass")pass++}
+    return pass/n;
+  }
+  function journal(){
+    const R=rng(11),sessions=["London","New York","Asia"],setups=["Pullback","Breakout","Reversal"],edge={London:.55,"New York":.47,Asia:.33};
+    const out=[];
+    for(let i=0;i<64;i++){const s=sessions[Math.floor(R()*3)],k=setups[Math.floor(R()*3)];
+      const win=R()<edge[s]+(k==="Pullback"?.06:k==="Reversal"?-.08:0);
+      const risk=R()<.1?1.5:0.5;out.push({s,k,risk,r:win?1.8*risk/0.5:-risk/0.5})}
+    return out;
+  }
+  function group(rows,key){const g={};rows.forEach(t=>{(g[t[key]]=g[t[key]]||{n:0,w:0,r:0});g[t[key]].n++;g[t[key]].r+=t.r;if(t.r>0)g[t[key]].w++});
+    return Object.entries(g).map(([name,v])=>({name,...v})).sort((a,b)=>b.r-a.r)}
+
+  const AGENTS=[
+    {id:"guard",name:"Rule Guardian",tag:"Drawdown",desc:"Tracks equity against your program's exact loss limits.",prompts:[
+      ["How much can I still lose today?",()=>{const a=account(),bind=Math.min(a.roomDay,a.roomAll),which=a.roomDay<=a.roomAll?"daily":"overall";
+        return {steps:["Load rule profile: "+a.plan+" · "+fmtUsd(a.size),"Read start-of-day balance "+fmtUsd(a.sod)+" and equity "+fmtUsd(a.equity),"Compute daily floor at "+a.dailyPct+"% of start-of-day balance",a.one?"Compute trailing floor (6%, locks at start balance)":"Compute static floor at 10% of start balance","Apply your 80% stop buffer"],
+          answer:`<p>You can lose <strong>${fmtUsd(bind)}</strong> more before breaching the ${which} limit. With your 80% buffer, Rule Guardian will pause new orders after another <strong>${fmtUsd(bind*0.8)}</strong>.</p><div class="figs">${fig("Left today",fmtUsd(a.roomDay))}${fig("Left overall",fmtUsd(a.roomAll))}${fig("Daily floor",fmtUsd(a.dailyFloor))}${fig("Overall floor",fmtUsd(a.overallFloor))}</div>`,
+          sources:[a.plan+" rule profile","Account balance and equity snapshot"],checks:["Daily limit uses start-of-day balance","Floors recomputed after last closed trade"]}}],
+      ["What lot size is safe on a 20-pip EURUSD stop?",()=>{const a=account(),risk=Math.min(a.size*0.005,Math.min(a.roomDay,a.roomAll)*0.25),lots=Math.floor(risk/200*100)/100;
+        return {steps:["Load remaining room from Rule Guardian","Cap risk at 0.5% of balance or 25% of today's room, whichever is smaller","Pip value: $10 per standard lot on EURUSD","Size = risk ÷ (20 pips × $10)"],
+          answer:`<p>Trade up to <strong>${lots.toFixed(2)} lots</strong>. That risks ${fmtUsd(risk)} on a 20-pip stop, so four straight losers still leave you inside today's limit.</p><div class="figs">${fig("Max lots",lots.toFixed(2))}${fig("Risk per trade",fmtUsd(risk))}${fig("Losses to daily limit",Math.floor(a.roomDay/risk))}</div>`,
+          sources:[a.plan+" rule profile","EURUSD contract specs"],checks:["Size rounded down to 0.01 lots","Leverage within program limit"]}}]]},
+    {id:"coach",name:"Challenge Coach",tag:"Sizing",desc:"Stress-tests your plan and tells you what to change.",prompts:[
+      ["Is my risk per trade too high?",()=>{const v={};ids.forEach(i=>v[i]=parseFloat(el[i].value));
+        const now=simulate(v,1500),half=simulate({...v,risk:Math.max(0.25,v.risk/2)},1500),better=half>now;
+        return {steps:["Read your Challenge Planner inputs","Simulate 1,500 challenges at "+v.risk+"% risk","Simulate 1,500 challenges at "+Math.max(0.25,v.risk/2)+"% risk","Compare pass rates and breach causes"],
+          answer:`<p>${better?`Yes. Cutting risk to <strong>${Math.max(0.25,v.risk/2)}%</strong> lifts the simulated pass rate from ${Math.round(now*100)}% to <strong>${Math.round(half*100)}%</strong>.`:`Not really. Halving risk moves the simulated pass rate from ${Math.round(now*100)}% to ${Math.round(half*100)}%, so sizing isn't what's holding you back.`}</p><div class="figs">${fig("Pass rate now",Math.round(now*100)+"%")}${fig("At half risk",Math.round(half*100)+"%",better?"good":"")}${fig("Win rate · R:R",v.win+"% · "+v.rr.toFixed(1)+"R")}</div><p>${$("#advice").textContent}</p>`,
+          sources:["Challenge Planner inputs","Rule profile: "+$("#preset").selectedOptions[0].text],checks:["Same random seed for both runs","Hypothetical simulation, not a forecast"]}}],
+      ["What win rate do I need to pass?",()=>{const v={};ids.forEach(i=>v[i]=parseFloat(el[i].value));let need=null;
+        for(let w=25;w<=75;w++){if(simulate({...v,win:w},600)>=0.5){need=w;break}}
+        return {steps:["Hold your risk, R:R and trades per day fixed","Sweep win rate from 25% to 75%","Find the lowest win rate with a 50%+ pass rate"],
+          answer:need?`<p>At ${v.risk}% risk and ${v.rr.toFixed(1)}R you need roughly a <strong>${need}% win rate</strong> for even odds of passing. You set ${v.win}%, which is ${v.win>=need?'<span class="good">above</span>':'<span class="bad">below</span>'} that.</p>`:`<p>No win rate up to 75% gives even odds with these settings. Lower risk per trade or raise your reward-to-risk first.</p>`,
+          sources:["Challenge Planner inputs"],checks:["600 simulations per step","Hypothetical simulation, not a forecast"]}}]]},
+    {id:"journal",name:"Journal Analyst",tag:"Review",desc:"Tags every trade and finds where your edge actually is.",prompts:[
+      ["Where does my edge come from?",()=>{const j=journal(),bySes=group(j,"s"),bySet=group(j,"k"),best=bySes[0],worst=bySes[bySes.length-1];
+        return {steps:["Load last 64 closed trades","Tag each by session and setup","Total R and win rate per tag","Rank strongest and weakest"],
+          answer:`<p>Your edge is the <strong>${best.name} session</strong> (${best.r>=0?"+":""}${best.r.toFixed(1)}R over ${best.n} trades). ${worst.name} is costing you ${worst.r.toFixed(1)}R; consider skipping it during a challenge.</p><div class="figs">${bySes.map(g=>fig(g.name+" · "+Math.round(g.w/g.n*100)+"% wins",(g.r>=0?"+":"")+g.r.toFixed(1)+"R",g.r>=0?"good":"bad")).join("")}</div><p>Best setup: <strong>${bySet[0].name}</strong> (${bySet[0].r>=0?"+":""}${bySet[0].r.toFixed(1)}R).</p>`,
+          sources:["Sample trade journal (64 trades)"],checks:["Commissions included","Open trades excluded"]}}],
+      ["Which trades broke my risk plan?",()=>{const j=journal(),over=j.filter(t=>t.risk>0.5),cost=over.filter(t=>t.r<0).reduce((s,t)=>s+t.r,0);
+        return {steps:["Load last 64 closed trades","Compare each trade's risk to your 0.5% plan","Total the losses from oversized trades"],
+          answer:`<p><strong>${over.length} trades</strong> risked 1.5% instead of 0.5%. Their losers cost you ${cost.toFixed(1)}R, about ${Math.round(Math.abs(cost)*0.5*10)/10}% of the account.</p>`,
+          sources:["Sample trade journal (64 trades)","Your risk plan: 0.5% per trade"],checks:["Risk measured from entry to initial stop"]}}]]},
+    {id:"payout",name:"Payout Desk",tag:"Payouts",desc:"Checks every payout condition and drafts the request.",prompts:[
+      ["Am I eligible for a payout?",()=>{const a=account(),profit=a.size*0.046,best=profit*0.34,checks=[["14 days since funding","16 days",true],["Net profit above zero",fmtUsd(profit),true],["No rule breaches","None",true]];
+        if(a.one)checks.push(["Best day ≤ 40% of profit","34%",true]);
+        return {steps:["Load funded account history","Check payout cycle","Check net profit and breaches",a.one?"Check consistency rule (best day ≤ 40%)":"Consistency rule not required on "+a.plan,"Apply "+Math.round(a.split*100)+"% profit split"],
+          answer:`<p><span class="good">Eligible.</span> You can request <strong>${fmtUsd(profit*a.split)}</strong> (${Math.round(a.split*100)}% of ${fmtUsd(profit)}). Your ${fmtUsd(FEES[type][sizeIdx])} evaluation fee is refunded with it.</p><div class="figs">${checks.map(c=>fig(c[0],c[1],c[2]?"good":"bad")).join("")}</div>`,
+          sources:[a.plan+" trader agreement","Funded account history"],checks:checks.map(c=>c[0])}}]]},
+    {id:"news",name:"News Sentinel",tag:"Calendar",desc:"Flags high-impact events your program restricts.",prompts:[
+      ["What should I watch out for today?",()=>{const a=account(),ev=[["US CPI","in 1h 40m","USD, indices, gold"],["ECB President speaks","in 4h 10m","EUR"],["FOMC minutes","tomorrow 19:00 UTC","All USD pairs"]];
+        return {steps:["Load today's economic calendar","Keep high-impact events only","Match against open positions and watchlist","Apply "+a.plan+" news rule"],
+          answer:`<p>US CPI lands <strong>in 1h 40m</strong>. ${a.one?"Your One-Step Express rules ban opening or closing trades within 2 minutes of it, so Sentinel will block orders from 2 minutes before to 2 minutes after.":"News trading is allowed on Two-Step Classic, but spreads widen. Sentinel suggests halving size or being flat."}</p><div class="figs">${ev.map(e=>fig(e[0]+" · "+e[2],e[1])).join("")}</div>`,
+          sources:["Economic calendar (sample)",a.plan+" news rule"],checks:["High-impact events only","Times shown relative to now"]}}]]},
+    {id:"quant",name:"Strategy Agent",tag:"Otto Quant",desc:"Turns your idea into guarded, testable rules.",prompts:[
+      ["Build my Otto Quant idea with prop guards",()=>{generate();
+        return {steps:["Read your idea from Otto Quant","Detect market, style and timeframe","Write entry, stop and exit rules","Add drawdown guards for "+$("#ruleset").value],
+          answer:`<p>Built <strong>${$("#sName").textContent}</strong> (${$("#sStyle").textContent}). Its guards halt trading before your limits: <span class="num">${$("#sRules dd:last-of-type").textContent}</span>.</p><p><a href="#quant">Open it in Otto Quant →</a></p>`,
+          sources:["Your Otto Quant idea","Rule profile: "+$("#ruleset").value],checks:["Risk capped at a quarter of the daily limit","Rules are explicit and backtestable"]}}],
+      ["Make it compliant with One-Step Express",()=>{$("#ruleset").value="Otto Funded One-Step";generate();
+        return {steps:["Switch rule profile to One-Step Express","Recompute risk cap from 3% daily limit","Regenerate guards"],
+          answer:`<p>Done. Risk is now <strong>${$("#sRules dd:nth-of-type(7)").textContent}</strong> and the guards read <span class="num">${$("#sRules dd:last-of-type").textContent}</span>.</p><p><a href="#quant">See the updated spec →</a></p>`,
+          sources:["One-Step Express rule profile"],checks:["Daily guard at 80% of the 3% limit"]}}]]}
+  ];
+  const ROUTES=[[/lose|drawdown|limit|floor|room|left today/,"guard",0],[/lot|size|position/,"guard",1],[/win rate|need to pass/,"coach",1],[/risk|pass|plan/,"coach",0],
+    [/broke|oversiz|mistake/,"journal",1],[/edge|journal|session|setup|best/,"journal",0],[/payout|withdraw|paid|eligible/,"payout",0],
+    [/news|cpi|fomc|nfp|event|calendar/,"news",0],[/one[- ]?step|compliant/,"quant",1],[/strategy|algo|idea|quant|build/,"quant",0]];
+  let current=AGENTS[0],runId=0;
+  const roster=$("#roster");
+  AGENTS.forEach(a=>{const li=document.createElement("li");li.innerHTML=`<button type="button"><span class="tag">${a.tag}</span><b>${a.name}</b><span>${a.desc}</span></button>`;
+    li.firstChild.onclick=()=>{select(a);ask(0)};a.btn=li.firstChild;roster.appendChild(li)});
+  function select(a){current=a;AGENTS.forEach(x=>x.btn.setAttribute("aria-pressed",x===a));
+    $("#agName").textContent=a.name;$("#agDesc").textContent=a.desc;
+    $("#agPrompts").innerHTML="";a.prompts.forEach((p,i)=>{const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=p[0];b.onclick=()=>ask(i);$("#agPrompts").appendChild(b)})}
+  function ask(i,typed){
+    const id=++runId,p=current.prompts[i],r=p[1](),body=$("#conBody");
+    body.innerHTML=`<div class="ask">${typed?typed.replace(/[<>&]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[c])):p[0]}</div><ol class="steps">${r.steps.map(s=>`<li>${s}</li>`).join("")}</ol>`;
+    const lis=body.querySelectorAll(".steps li");
+    const finish=()=>{if(id!==runId)return;lis.forEach(l=>l.classList.add("done"));
+      body.insertAdjacentHTML("beforeend",`<div class="answer">${r.answer}</div><details class="receipt"><summary>Receipt · ${r.sources.length} sources · ${r.checks.length} checks passed</summary><ul>${r.sources.map(s=>`<li>Source: ${s}</li>`).join("")}${r.checks.map(c=>`<li><span class="ok">✓</span> ${c}</li>`).join("")}</ul></details>`)};
+    if(reduced)return finish();
+    lis.forEach((l,k)=>setTimeout(()=>{if(id===runId)l.classList.add("done")},260*(k+1)));
+    setTimeout(finish,260*(lis.length+1));
+  }
+  const esc=t=>t.replace(/[<>&]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
+  function snapshot(){
+    const a=account(),v={};ids.forEach(i=>v[i]=parseFloat(el[i].value));const r=n=>Math.round(n);
+    return {plan:a.plan,accountSize:a.size,startOfDayBalance:r(a.sod),equity:r(a.equity),dailyLossFloor:r(a.dailyFloor),overallLossFloor:r(a.overallFloor),
+      roomLeftToday:r(a.roomDay),roomLeftOverall:r(a.roomAll),daysSinceFunded:16,netProfit:r(a.size*0.046),bestDayShareOfProfit:"34%",
+      planner:{ruleProfile:$("#preset").selectedOptions[0].text,targetPct:v.target,dailyLimitPct:v.daily,maxLossPct:v.maxdd,riskPerTradePct:v.risk,winRatePct:v.win,rewardToRisk:v.rr,tradesPerDay:v.tpd,simulatedPassRate:$("#kPass").textContent},
+      quant:{idea:$("#idea").value.slice(0,500),spec:$("#sCode").textContent.slice(0,800)},
+      upcomingEvents:["US CPI in 1h 40m","ECB President speaks in 4h 10m","FOMC minutes tomorrow 19:00 UTC"]};
+  }
+  async function askAI(q){
+    const id=++runId,body=$("#conBody");
+    body.innerHTML=`<div class="ask">${esc(q)}</div><ol class="steps"><li class="done">Load ${current.name} context: plan, account, planner and strategy</li><li>Thinking…</li></ol>`;
+    try{
+      const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),45000);
+      const res=await fetch("/api/agent",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({agent:current.id,question:q,context:snapshot()}),signal:ctrl.signal});
+      clearTimeout(timer);
+      if(!res.ok)throw new Error(res.status);
+      const data=await res.json();if(id!==runId)return;
+      body.querySelectorAll(".steps li").forEach(l=>l.classList.add("done"));
+      body.querySelector(".steps li:last-child").textContent="Answer from the program rules and your sample account";
+      body.insertAdjacentHTML("beforeend",`<div class="answer">${esc(data.answer||"").split(/\n{2,}/).map(p=>`<p>${p.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\n/g,"<br>")}</p>`).join("")}</div><details class="receipt"><summary>Receipt · AI answer · 4 sources</summary><ul><li>Source: ${esc(account().plan)} rule profile</li><li>Source: sample account snapshot</li><li>Source: Challenge Planner inputs</li><li>Source: Otto Quant idea</li><li><span class="ok">✓</span> AI-generated; check the numbers before acting</li></ul></details>`);
+    }catch(err){
+      if(id!==runId)return;
+      const hit=ROUTES.find(r=>r[0].test(q.toLowerCase()));
+      if(hit){select(AGENTS.find(a=>a.id===hit[1]));ask(hit[2],q)}
+      else{runId++;body.innerHTML=`<div class="ask">${esc(q)}</div><div class="answer"><p>The agents can answer questions about drawdown, sizing, your journal, payouts, news and strategies. Try one of the suggested questions below.</p></div>`}
+    }
+  }
+  $("#agForm").onsubmit=e=>{e.preventDefault();const q=$("#agInput").value.trim();if(!q)return;askAI(q.slice(0,600));$("#agInput").value=""};
+  select(AGENTS[0]);ask(0);
+
+  /* ---------- Playbooks ---------- */
+  const PB_STEPS=[["guard","Rule Guardian","Recompute what's left today and overall"],["news","News Sentinel","Scan the next 4 hours for restricted events"],
+    ["coach","Challenge Coach","Re-size the next trade from remaining room"],["journal","Journal Analyst","Tag the trade and update your stats"],
+    ["payout","Payout Desk","Verify eligibility and draft the request"],["pause","Pause new orders","Block entries until you resume",true]];
+  const PB_PRESETS={open:["guard","news","coach"],dd:["guard","coach","pause"],close:["journal","guard"],payout:["guard","payout"]};
+  const PB_TRIG={open:"The trading session opens",dd:"Equity drops 2% on the day",close:"A trade closes",payout:"You're about to request a payout"};
+  PB_STEPS.forEach(s=>$("#pbSteps").insertAdjacentHTML("beforeend",`<label class="check"><input type="checkbox" value="${s[0]}"> ${s[1]}</label>`));
+  const pbBoxes=[...document.querySelectorAll("#pbSteps input")];
+  function pbPreset(){const on=PB_PRESETS[$("#pbTrigger").value];pbBoxes.forEach(b=>b.checked=on.includes(b.value));pbRender()}
+  function pbRender(){
+    const chosen=PB_STEPS.filter(s=>pbBoxes.find(b=>b.value===s[0]).checked),human=$("#pbHuman").checked,acts=chosen.filter(s=>s[3]),agents=chosen.filter(s=>!s[3]);
+    let n=0,h=`<li class="trigger"><i>▶</i><div><b>${PB_TRIG[$("#pbTrigger").value]}</b><span>Trigger</span></div></li>`;
+    chosen.forEach(s=>{if(s[3]&&human)h+=`<li class="human"><i>you</i><div><b>Your approval</b><span>Notification with the agents' findings and a one-tap confirm</span></div></li>`;
+      h+=`<li><i>${String(++n).padStart(2,"0")}</i><div><b>${s[1]}</b><span>${s[2]}</span></div></li>`});
+    h+=`<li><i>✓</i><div><b>Summary to your phone</b><span>Every finding with its receipt</span></div></li>`;
+    $("#pbFlow").innerHTML=h;
+    $("#pbSum").textContent=chosen.length?`When ${PB_TRIG[$("#pbTrigger").value].toLowerCase()}, ${agents.length?agents.map(s=>s[1]).join(", ").replace(/, ([^,]*)$/," and $1")+(agents.length>1?" run in order.":" runs."):"no agents run."}`+(acts.length?(human?" New orders are paused only after you confirm.":" New orders are paused automatically."):" Nothing changes your orders."):"Pick at least one agent to run.";
+  }
+  $("#pbTrigger").onchange=pbPreset;pbBoxes.forEach(b=>b.onchange=pbRender);$("#pbHuman").onchange=pbRender;
+  $("#pbSave").onclick=()=>toast("Playbooks save to your account once sign-in is live.");
+  pbPreset();
 })();
 </script>
 
