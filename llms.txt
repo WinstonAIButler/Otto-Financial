@@ -1,0 +1,15 @@
+# Otto Financial
+
+> Otto Financial runs a simulated prop firm evaluation program (Otto Funded), a risk toolkit for traders taking other firms' evaluations (Challenge Toolkit), an AI strategy builder (Otto Quant), and an AI agent desk for funded traders (Otto Agents). All Otto Funded accounts are simulated. Otto Financial is not a broker, does not accept client deposits, and does not provide investment advice. Prices, rules and statistics on the site are launch placeholders; the trader agreement sets final terms.
+
+## Products
+
+- [Otto Funded](https://ottofinancial.tech/#funded): Two-Step Classic and One-Step Express simulated evaluations, $10K to $200K accounts, payout requests every 14 days, reward split up to 90% after scaling. The evaluation fee is refunded with the first payout.
+- [Challenge Toolkit](https://ottofinancial.tech/#toolkit): firm rule profiles, drawdown guard, position sizer, news filter, consistency tracker, trade journal, and a challenge planner that runs hypothetical simulations. Check each firm's terms; some restrict third-party tools.
+- [Otto Quant](https://ottofinancial.tech/#quant): describe a strategy in plain English, get explicit entry, exit and risk rules, then backtest and paper-trade them. Backtests are hypothetical.
+- [Otto Agents](https://ottofinancial.tech/#agents): Rule Guardian, Challenge Coach, Journal Analyst, Payout Desk, News Sentinel and Strategy Agent. Agents explain rules, risk and sizing and never change an order without the trader's confirmation.
+
+## Key facts
+
+- [FAQ](https://ottofinancial.tech/#faq): simulated accounts, rule breaches, toolkit use at other firms, payouts.
+- Risk: trading FX, futures, CFDs and crypto involves substantial risk of loss. Past performance, actual or simulated, does not guarantee future results.

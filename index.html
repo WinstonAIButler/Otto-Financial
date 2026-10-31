@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Otto Financial: funded trader evaluations, a toolkit for passing prop firm challenges, and AI strategy building.">
-<title>Otto Financial</title>
+<meta name="description" content="Otto Financial runs simulated prop firm evaluations from $10K to $200K, a risk toolkit for other firms' challenges, and AI tools to build and test trading strategies.">
+<title>Otto Financial: Prop Firm Challenges &amp; AI Trading Tools</title>
+<meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -13,14 +14,22 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ottofinancial.tech/">
 <link rel="canonical" href="https://ottofinancial.tech/">
-<meta property="og:title" content="Otto Financial">
-<meta property="og:description" content="Funded trader evaluations, a toolkit for passing prop firm challenges, and AI strategy building.">
+<meta property="og:site_name" content="Otto Financial">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Otto Financial: Prop Firm Challenges &amp; AI Trading Tools">
+<meta property="og:description" content="Simulated prop firm evaluations, a risk toolkit for other firms' challenges, and AI tools to build and test trading strategies.">
+<meta property="og:image:alt" content="Otto Financial crest and wordmark">
 <meta property="og:image" content="https://ottofinancial.tech/assets/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Otto Financial: Prop Firm Challenges &amp; AI Trading Tools">
+<meta name="twitter:description" content="Simulated prop firm evaluations, a risk toolkit for other firms' challenges, and AI tools to build and test trading strategies.">
 <meta name="twitter:image" content="https://ottofinancial.tech/assets/og-image.jpg">
+<meta name="twitter:image:alt" content="Otto Financial crest and wordmark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM summary">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: a private-bank letterhead in navy — crest-led header, one wide column of chaptered sections, gold reserved for figures and calls to action */
@@ -47,7 +56,14 @@
 body{margin:0}
 img{max-width:100%}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+section[id],main[id]{scroll-margin-top:84px}
+@media (max-width:760px){section[id],main[id]{scroll-margin-top:124px}}
+button,a,summary,input,select,textarea,label{touch-action:manipulation}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:absolute;left:16px;top:-60px;z-index:50;background:var(--gold-hi);color:#1a1408;padding:10px 14px;border-radius:6px;font-weight:600;text-decoration:none}
+.skip:focus{top:12px}
+@media (pointer:coarse){.chip,.seg button,nav.main a{min-height:44px;display:inline-flex;align-items:center}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--font-body);}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg-deep)}
@@ -79,6 +95,7 @@ nav.main a:hover{color:var(--fg);background:var(--panel)}
 .btn-ghost{background:transparent;border-color:var(--line);color:var(--fg)}
 .btn-ghost:hover{background:var(--panel)}
 @media (max-width:760px){nav.main{order:3;width:100%;overflow-x:auto;flex-wrap:nowrap}.top .btn{padding:10px 14px}}
+@media (max-width:440px){.top .wrap{gap:12px}.top .brand span{display:none}.top .btn{padding:10px 12px;font-size:.86rem}}
 
 /* hero */
 .hero .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:56px 40px}
@@ -86,12 +103,14 @@ nav.main a:hover{color:var(--fg);background:var(--panel)}
 .hero-copy h1 em{font-style:italic;color:var(--gold-hi)}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
 .hero-art{position:relative;min-width:0}
-.hero-art img{display:block;width:100%;max-width:460px;margin:0 auto;border-radius:8px}
+.hero-art img{display:block;width:100%;height:auto;max-width:460px;margin:0 auto;border-radius:8px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .stats div{padding:18px 16px;display:grid;gap:4px;border-left:1px solid var(--line)}
 .stats div:first-child{border-left:0}
 .stats strong{font:500 1.6rem/1 var(--font-data);color:var(--gold-hi);font-variant-numeric:tabular-nums}
 .stats span{font-size:.82rem;color:var(--muted)}
+.stats-note{font-size:.78rem;color:var(--muted);padding-top:8px}
+.hypo{font:500 .72rem/1 var(--font-data);color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
 @media (max-width:860px){.hero .hero-grid{grid-template-columns:1fr}.hero-art{order:-1}.hero-art img{max-width:300px}.stats{grid-template-columns:repeat(2,1fr)}.stats div:nth-child(3){border-left:0}.stats div:nth-child(n+3){border-top:1px solid var(--line)}}
 
 /* pillars */
@@ -289,15 +308,114 @@ footer p{max-width:110ch}
 footer strong{color:var(--silver)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--panel);border:1px solid var(--gold);color:var(--fg);padding:12px 18px;border-radius:8px;font-size:.9rem;z-index:30;max-width:calc(100% - 32px)}
 </style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://ottofinancial.tech/#org",
+   "name": "Otto Financial",
+   "url": "https://ottofinancial.tech/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://ottofinancial.tech/assets/icon-512.png",
+    "width": 512,
+    "height": 512
+   },
+   "image": "https://ottofinancial.tech/assets/og-image.jpg",
+   "description": "Otto Financial runs Otto Funded, a simulated prop firm evaluation program, plus the Challenge Toolkit for other firms' evaluations, Otto Quant for building and backtesting trading strategies, and Otto Agents, an AI agent desk for funded traders."
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://ottofinancial.tech/#website",
+   "url": "https://ottofinancial.tech/",
+   "name": "Otto Financial",
+   "inLanguage": "en-US",
+   "publisher": {
+    "@id": "https://ottofinancial.tech/#org"
+   }
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://ottofinancial.tech/#webpage",
+   "url": "https://ottofinancial.tech/",
+   "name": "Otto Financial: Prop Firm Challenges & AI Trading Tools",
+   "isPartOf": {
+    "@id": "https://ottofinancial.tech/#website"
+   },
+   "about": {
+    "@id": "https://ottofinancial.tech/#org"
+   },
+   "primaryImageOfPage": "https://ottofinancial.tech/assets/og-image.jpg"
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://ottofinancial.tech/#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Is Otto Funded trading real money?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Evaluation and funded accounts trade in a simulated environment that mirrors live market prices. Otto Financial pays performance rewards based on your simulated results under the trader agreement."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens if I break a rule?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hitting the daily or overall loss limit ends that account. You can start a new evaluation at a 15% discount within 7 days."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I use the Challenge Toolkit at other prop firms?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, as long as that firm allows it. The toolkit is a risk manager and planner. Several firms prohibit expert advisors, copy trading or trade-management software, so check each program's terms first. Otto Funded allows the toolkit on every account."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Will Otto Quant make me profitable?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No tool can promise that. Otto Quant helps you state a strategy precisely and test it honestly. Many ideas fail in backtesting, and finding that out in a test is far cheaper than finding it out live. A good backtest does not guarantee future results either."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can Otto Agents place trades for me?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Agents read your account and rules, explain what they found and suggest a next step. Anything that would open, close or resize a position needs your confirmation, and you can turn agents off at any time."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "When are payouts sent?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "You can request a payout every 14 days once funded. Approved requests are targeted to be paid within two business days by bank transfer or USDC, under the trader agreement."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#home" aria-label="Otto Financial home">
-      <img src="assets/crest.jpg" alt="">
-      <div><b>OTTO</b> <span>FINANCIAL</span></div>
+    <a class="brand" href="#main" aria-label="Otto Financial home">
+      <img src="assets/crest.jpg" alt="" width="44" height="44">
+      <div translate="no"><b>OTTO</b> <span>FINANCIAL</span></div>
     </a>
     <nav class="main" aria-label="Main">
       <a href="#funded">Otto Funded</a>
@@ -310,33 +428,36 @@ footer strong{color:var(--silver)}
   </div>
 </header>
 
-<main id="home">
+<main id="main">
+  <span id="home"></span>
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Proprietary trading, built properly</p>
-        <h1>Trade our capital. Keep up to <em>90%</em> of what you earn.</h1>
-        <p class="lede">Otto Financial runs its own funded-trader program, gives you the risk tools to pass evaluations anywhere, and lets you turn a trading idea into a tested algorithm with AI.</p>
+        <p class="eyebrow">Prop firm evaluations, built properly</p>
+        <h1>Prove your edge. Earn up to <em>90%</em> of the rewards.</h1>
+        <p class="lede">Otto Financial runs its own simulated funded-trader program, gives you risk tools for evaluations at other firms, and helps you turn a trading idea into rules you can backtest with AI. All Otto Funded accounts are simulated.</p>
         <div class="hero-ctas">
           <a class="btn btn-gold" href="#funded">See challenge accounts</a>
           <a class="btn btn-ghost" href="#toolkit">Plan a challenge</a>
         </div>
       </div>
-      <div class="hero-art"><img src="assets/stacked.jpg" alt="Otto Financial crest and wordmark"></div>
+      <div class="hero-art"><img src="assets/stacked.jpg" alt="Otto Financial crest and wordmark" width="620" height="599" fetchpriority="high"></div>
     </div>
     <div class="wrap">
       <div class="stats" aria-label="Program highlights (launch targets)">
         <div><strong>$200K</strong><span>Largest starting account</span></div>
-        <div><strong>90%</strong><span>Top profit split with scaling</span></div>
-        <div><strong>14 days</strong><span>Payout cycle</span></div>
-        <div><strong>0</strong><span>Time limits on evaluations</span></div>
+        <div><strong>90%</strong><span>Maximum reward split, after scaling</span></div>
+        <div><strong>14 days</strong><span>Payout request cycle</span></div>
+        <div><strong>None</strong><span>Evaluation time limit</span></div>
       </div>
+      <p class="stats-note">Launch targets. Final terms are set by the trader agreement.</p>
     </div>
     <div class="wrap">
+      <h2 class="sr-only">What Otto Financial offers</h2>
       <div class="pillars">
-        <a class="pillar" href="#funded"><span class="tag">Prop firm</span><h3>Otto Funded</h3><p>One-step and two-step evaluations from $10K to $200K, with clear rules and bi-weekly payouts.</p><span class="go">View accounts →</span></a>
-        <a class="pillar" href="#toolkit"><span class="tag">Pass any evaluation</span><h3>Challenge Toolkit</h3><p>Rule profiles for major firms, a drawdown guard, position sizing, and a pass-probability planner.</p><span class="go">Open the planner →</span></a>
-        <a class="pillar" href="#quant"><span class="tag">AI trading</span><h3>Otto Quant</h3><p>Describe a strategy in plain English. Otto Quant writes the rules, backtests them, and paper-trades them.</p><span class="go">Try the builder →</span></a>
+        <a class="pillar" href="#funded"><span class="tag">Prop firm</span><h3>Otto Funded</h3><p>Simulated one-step and two-step evaluations from $10K to $200K, with clear rules and payout requests every 14 days.</p><span class="go">View accounts →</span></a>
+        <a class="pillar" href="#toolkit"><span class="tag">Other firms' evaluations</span><h3>Challenge Toolkit</h3><p>Rule profiles for major firms, a drawdown guard, position sizing, and a pass-probability planner.</p><span class="go">Open the planner →</span></a>
+        <a class="pillar" href="#quant"><span class="tag">AI trading</span><h3>Otto Quant</h3><p>Describe a strategy in plain English. Otto Quant drafts testable rules, backtests them, and paper-trades them.</p><span class="go">Try the builder →</span></a>
       </div>
     </div>
   </section>
@@ -347,7 +468,7 @@ footer strong{color:var(--silver)}
       <div class="chap-head">
         <p class="eyebrow">Otto Funded</p>
         <h2>Our own prop firm, with rules you can read in a minute</h2>
-        <p class="lede">Pick an evaluation, hit the profit target without breaking the loss limits, and trade a funded account. The fee is refunded with your first payout.</p>
+        <p class="lede">Pick an evaluation, reach the profit target in a simulated account without breaking the loss limits, and move to a simulated funded account. The evaluation fee is refunded with your first payout, under the trader agreement.</p>
       </div>
 
       <div class="controls">
@@ -364,7 +485,7 @@ footer strong{color:var(--silver)}
         </div>
         <aside class="checkout" aria-label="Selected challenge">
           <p class="eyebrow" id="coLabel">Two-Step Classic</p>
-          <div class="price num" id="coPrice">$269<small>one-time fee</small></div>
+          <div class="price num" id="coPrice">$269<small>evaluation fee</small></div>
           <ul id="coList"></ul>
           <button class="btn btn-gold" type="button" id="buyBtn">Begin evaluation</button>
           <p class="fine">Evaluation and funded accounts are simulated. Payouts are performance rewards from Otto Financial, not returns on a deposit.</p>
@@ -374,8 +495,8 @@ footer strong{color:var(--silver)}
       <ol class="path">
         <li><b>Evaluation</b><span>Reach the profit target while staying inside the daily and overall loss limits.</span></li>
         <li><b>Verification</b><span>Two-Step only: a smaller target to confirm consistency. One-Step skips this.</span></li>
-        <li><b>Funded</b><span>Sign the trader agreement and receive your Otto Funded account within 24 hours.</span></li>
-        <li><b>Payout</b><span>Request every 14 days. Hit 10% net in four months and the account scales by 25%.</span></li>
+        <li><b>Funded</b><span>Sign the trader agreement and receive your simulated Otto Funded account, targeted within 24 hours.</span></li>
+        <li><b>Payout</b><span>Request every 14 days. Accounts that meet the scaling criteria (for example, 10% net simulated profit over four months) can grow by 25%.</span></li>
       </ol>
     </div>
   </section>
@@ -385,17 +506,17 @@ footer strong{color:var(--silver)}
     <div class="wrap">
       <div class="chap-head">
         <p class="eyebrow">Challenge Toolkit</p>
-        <h2>Pass other firms' evaluations by managing risk, not by luck</h2>
-        <p class="lede">Most failed challenges are rule breaches, not bad analysis. The toolkit loads a firm's exact rules and keeps every position inside them.</p>
+        <h2>Take on other firms' evaluations with a risk plan, not guesswork</h2>
+        <p class="lede">One rule breach can end a challenge even when the analysis was sound. The toolkit loads a firm's published rules and checks each new position against them.</p>
       </div>
 
       <div class="features">
-        <div class="feat"><span class="k">Rule profiles</span><h3>Every firm's fine print, loaded</h3><p>Daily loss basis, trailing or static drawdown, consistency rules, news restrictions and minimum days for 40+ popular programs.</p></div>
-        <div class="feat"><span class="k">Drawdown guard</span><h3>Stops you before the firm does</h3><p>Tracks equity in real time and blocks new orders when you are within your chosen buffer of the daily or overall limit.</p></div>
-        <div class="feat"><span class="k">Position sizer</span><h3>Lot size from risk, not gut</h3><p>Sizes each trade from your stop distance and the drawdown you have left today, so one loss can never end the challenge.</p></div>
+        <div class="feat"><span class="k">Rule profiles</span><h3>The fine print, loaded</h3><p>Daily loss basis, trailing or static drawdown, consistency rules, news restrictions and minimum days for 40+ popular programs.</p></div>
+        <div class="feat"><span class="k">Drawdown guard</span><h3>Warns you before the firm's limit</h3><p>Tracks equity in real time and blocks new orders when you are within your chosen buffer of the daily or overall limit.</p></div>
+        <div class="feat"><span class="k">Position sizer</span><h3>Lot size from risk, not gut</h3><p>Sizes each trade from your stop distance and the drawdown you have left today, so a single stopped-out trade stays inside the room you have left. Gaps and slippage can still run past a stop.</p></div>
         <div class="feat"><span class="k">News filter</span><h3>Flat before red-folder events</h3><p>Warns and optionally closes positions ahead of high-impact releases where your firm's rules restrict trading.</p></div>
-        <div class="feat"><span class="k">Consistency tracker</span><h3>No single-day surprises</h3><p>Shows how close your best day is to the firm's consistency cap before you request a payout.</p></div>
-        <div class="feat"><span class="k">Journal</span><h3>Know why you failed last time</h3><p>Auto-tags each trade by session, setup and rule proximity, then shows where your edge actually comes from.</p></div>
+        <div class="feat"><span class="k">Consistency tracker</span><h3>See your best-day share early</h3><p>Shows how close your best day is to the firm's consistency cap before you request a payout.</p></div>
+        <div class="feat"><span class="k">Journal</span><h3>Know why you failed last time</h3><p>Auto-tags each trade by session, setup and rule proximity, then shows which sessions and setups did best in your own history.</p></div>
       </div>
 
       <div class="planner">
@@ -419,6 +540,7 @@ footer strong{color:var(--silver)}
           <div class="field"><label for="tpd">Trades per day <output id="tpdOut"></output></label><input type="range" id="tpd" min="1" max="8" step="1" value="3"></div>
         </form>
         <div class="results">
+          <p class="hypo">Hypothetical simulation results</p>
           <div class="kpis">
             <div class="kpi pass"><span>Pass rate</span><strong id="kPass">–</strong></div>
             <div class="kpi fail"><span>Fail: daily limit</span><strong id="kDaily">–</strong></div>
@@ -448,7 +570,7 @@ footer strong{color:var(--silver)}
       <div class="pipeline">
         <div><b>01</b><span>Describe</span><small>Your idea, in your words</small></div>
         <div><b>02</b><span>Generate</span><small>AI writes testable rules</small></div>
-        <div><b>03</b><span>Backtest</span><small>Years of tick data, real costs</small></div>
+        <div><b>03</b><span>Backtest</span><small>Historical data with modeled spreads and fees</small></div>
         <div><b>04</b><span>Paper trade</span><small>30 days forward, no capital</small></div>
         <div><b>05</b><span>Deploy</span><small>Broker or Otto Funded account</small></div>
       </div>
@@ -465,7 +587,7 @@ footer strong{color:var(--silver)}
           <div class="row2">
             <div class="field"><label for="market">Market</label>
               <select id="market"><option value="auto">Detect from idea</option><option>EURUSD</option><option>XAUUSD</option><option>NQ</option><option>ES</option><option>BTCUSD</option></select></div>
-            <div class="field"><label for="ruleset">Keep it compliant with</label>
+            <div class="field"><label for="ruleset">Size it to the rules of</label>
               <select id="ruleset"><option>Otto Funded Two-Step</option><option>Otto Funded One-Step</option><option>No prop rules</option></select></div>
           </div>
           <button class="btn btn-gold" type="button" id="genBtn">Generate algorithm</button>
@@ -510,8 +632,8 @@ footer strong{color:var(--silver)}
           <div class="con-foot">
             <div class="chips" id="agPrompts" aria-label="Suggested questions"></div>
             <form id="agForm">
-              <label for="agInput" hidden>Ask the agent</label>
-              <input id="agInput" autocomplete="off" maxlength="600" placeholder="Ask about drawdown, sizing, payouts, news…">
+              <label for="agInput" class="sr-only">Ask the agent</label>
+              <input id="agInput" name="question" type="text" autocomplete="off" enterkeyhint="send" maxlength="600" placeholder="Ask about drawdown, sizing, payouts, news…">
               <button class="btn btn-gold" type="submit">Ask</button>
             </form>
           </div>
@@ -521,7 +643,7 @@ footer strong{color:var(--silver)}
 
       <div class="subhead">
         <p class="eyebrow">Playbooks</p>
-        <h3>Chain agents into a routine that runs itself</h3>
+        <h3>Chain agents into a routine that runs on a trigger</h3>
         <p class="lede">Pick a trigger, choose which agents run, and decide where you want to sign off. No code.</p>
       </div>
       <div class="playbook">
@@ -561,7 +683,7 @@ footer strong{color:var(--silver)}
           <li>Rule Guardian shows the exact dollars left today and overall</li>
           <li>Challenge Coach sizes each trade from the room you have left</li>
           <li>News Sentinel flags restricted events hours ahead</li>
-          <li>Payout Desk checks every condition and drafts the request</li>
+          <li>Payout Desk checks each listed payout condition and drafts the request</li>
           <li>Journal Analyst tags each trade and shows where your edge is</li>
         </ul></div>
       </div>
@@ -575,9 +697,9 @@ footer strong{color:var(--silver)}
         <details><summary>Is Otto Funded trading real money?</summary><p>Evaluation and funded accounts trade in a simulated environment that mirrors live market prices. Otto Financial pays performance rewards based on your simulated results under the trader agreement.</p></details>
         <details><summary>What happens if I break a rule?</summary><p>Hitting the daily or overall loss limit ends that account. You can start a new evaluation at a 15% discount within 7 days.</p></details>
         <details><summary>Can I use the Challenge Toolkit at other prop firms?</summary><p>Yes, as long as that firm allows it. The toolkit is a risk manager and planner. Several firms prohibit expert advisors, copy trading or trade-management software, so check each program's terms first. Otto Funded allows the toolkit on every account.</p></details>
-        <details><summary>Will Otto Quant make me profitable?</summary><p>No tool can promise that. Otto Quant helps you state a strategy precisely and test it honestly. Many ideas fail in backtesting, and that is a useful result that costs you nothing.</p></details>
+        <details><summary>Will Otto Quant make me profitable?</summary><p>No tool can promise that. Otto Quant helps you state a strategy precisely and test it honestly. Many ideas fail in backtesting, and finding that out in a test is far cheaper than finding it out live. A good backtest does not guarantee future results either.</p></details>
         <details><summary>Can Otto Agents place trades for me?</summary><p>No. Agents read your account and rules, explain what they found and suggest a next step. Anything that would open, close or resize a position needs your confirmation, and you can turn agents off at any time.</p></details>
-        <details><summary>When are payouts sent?</summary><p>You can request a payout every 14 days once funded. Requests are reviewed and paid within two business days by bank transfer or USDC.</p></details>
+        <details><summary>When are payouts sent?</summary><p>You can request a payout every 14 days once funded. Approved requests are targeted to be paid within two business days by bank transfer or USDC, under the trader agreement.</p></details>
       </div>
     </div>
   </section>
@@ -585,7 +707,7 @@ footer strong{color:var(--silver)}
   <section class="cta-band">
     <div class="wrap">
       <p class="eyebrow">Otto Financial</p>
-      <h2>Prove your edge. Trade our capital.</h2>
+      <h2>Prove your edge on a simulated funded account.</h2>
       <a class="btn btn-gold" href="#funded">Choose your account</a>
     </div>
   </section>
@@ -594,7 +716,7 @@ footer strong{color:var(--silver)}
 <footer>
   <div class="wrap">
     <div class="foot-top">
-      <a class="brand" href="#home"><img src="assets/crest.jpg" alt=""><div><b>OTTO</b> <span>FINANCIAL</span></div></a>
+      <a class="brand" href="#main" aria-label="Otto Financial, back to top"><img src="assets/crest.jpg" alt="" width="44" height="44" loading="lazy"><div translate="no"><b>OTTO</b> <span>FINANCIAL</span></div></a>
       <span>© 2026 Otto Financial. All rights reserved.</span>
     </div>
     <p><strong>Risk disclosure.</strong> Trading foreign exchange, futures, CFDs and cryptocurrencies involves substantial risk of loss and is not suitable for every investor. Past performance, whether actual or simulated, does not guarantee future results.</p>
@@ -602,7 +724,7 @@ footer strong{color:var(--silver)}
     <p><strong>Hypothetical performance.</strong> Backtests, planner simulations and sample curves are hypothetical and have inherent limitations. They are prepared with the benefit of hindsight and do not reflect the impact of real market conditions, slippage or emotional decision-making.</p>
   </div>
 </footer>
-<div class="toast" id="toast" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
 (function(){
@@ -629,9 +751,9 @@ footer strong{color:var(--silver)}
     $("#rulesTable").innerHTML="<thead><tr><th>Rule</th><th>"+p.name+" · "+fmt$(size)+"</th></tr></thead><tbody>"+
       p.rows.map(r=>"<tr><th scope='row'>"+r[0]+"</th><td>"+(/target|loss/i.test(r[0])?pct(r[1]):r[1])+"</td></tr>").join("")+"</tbody>";
     $("#coLabel").textContent=p.name+" · "+fmt$(size);
-    $("#coPrice").innerHTML=fmt$(fee)+"<small>one-time fee</small>";
+    $("#coPrice").innerHTML=fmt$(fee)+"<small>evaluation fee</small>";
     const split=type==="one"?0.9:0.8;
-    $("#coList").innerHTML=["Fee refunded with your first payout","A 5% month on this account pays you "+fmt$(Math.round(size*0.05*split)),"Payouts every 14 days","Challenge Toolkit included"].map(x=>"<li>"+x+"</li>").join("");
+    $("#coList").innerHTML=["Evaluation fee refunded with your first payout","Example: a 5% simulated gain on this account earns a "+fmt$(Math.round(size*0.05*split))+" reward ("+Math.round(split*100)+"% split)","Payouts every 14 days","Challenge Toolkit included"].map(x=>"<li>"+x+"</li>").join("");
     $("#buyBtn").textContent="Begin "+fmt$(size/1)+" evaluation";
   }
   $("#buyBtn").onclick=()=>toast("Checkout opens here once payments are connected.");
@@ -791,7 +913,7 @@ footer strong{color:var(--silver)}
           sources:[a.plan+" rule profile","Account balance and equity snapshot"],checks:["Daily limit uses start-of-day balance","Floors recomputed after last closed trade"]}}],
       ["What lot size is safe on a 20-pip EURUSD stop?",()=>{const a=account(),risk=Math.min(a.size*0.005,Math.min(a.roomDay,a.roomAll)*0.25),lots=Math.floor(risk/200*100)/100;
         return {steps:["Load remaining room from Rule Guardian","Cap risk at 0.5% of balance or 25% of today's room, whichever is smaller","Pip value: $10 per standard lot on EURUSD","Size = risk ÷ (20 pips × $10)"],
-          answer:`<p>Trade up to <strong>${lots.toFixed(2)} lots</strong>. That risks ${fmtUsd(risk)} on a 20-pip stop, so four straight losers still leave you inside today's limit.</p><div class="figs">${fig("Max lots",lots.toFixed(2))}${fig("Risk per trade",fmtUsd(risk))}${fig("Losses to daily limit",Math.floor(a.roomDay/risk))}</div>`,
+          answer:`<p>Trade up to <strong>${lots.toFixed(2)} lots</strong>. That risks ${fmtUsd(risk)} on a 20-pip stop, so four straight losers at your stop still leave you inside today's limit (gaps and slippage aside).</p><div class="figs">${fig("Max lots",lots.toFixed(2))}${fig("Risk per trade",fmtUsd(risk))}${fig("Losses to daily limit",Math.floor(a.roomDay/risk))}</div>`,
           sources:[a.plan+" rule profile","EURUSD contract specs"],checks:["Size rounded down to 0.01 lots","Leverage within program limit"]}}]]},
     {id:"coach",name:"Challenge Coach",tag:"Sizing",desc:"Stress-tests your plan and tells you what to change.",prompts:[
       ["Is my risk per trade too high?",()=>{const v={};ids.forEach(i=>v[i]=parseFloat(el[i].value));
@@ -804,10 +926,10 @@ footer strong{color:var(--silver)}
         return {steps:["Hold your risk, R:R and trades per day fixed","Sweep win rate from 25% to 75%","Find the lowest win rate with a 50%+ pass rate"],
           answer:need?`<p>At ${v.risk}% risk and ${v.rr.toFixed(1)}R you need roughly a <strong>${need}% win rate</strong> for even odds of passing. You set ${v.win}%, which is ${v.win>=need?'<span class="good">above</span>':'<span class="bad">below</span>'} that.</p>`:`<p>No win rate up to 75% gives even odds with these settings. Lower risk per trade or raise your reward-to-risk first.</p>`,
           sources:["Challenge Planner inputs"],checks:["600 simulations per step","Hypothetical simulation, not a forecast"]}}]]},
-    {id:"journal",name:"Journal Analyst",tag:"Review",desc:"Tags every trade and finds where your edge actually is.",prompts:[
+    {id:"journal",name:"Journal Analyst",tag:"Review",desc:"Tags every trade and shows what has worked in your history.",prompts:[
       ["Where does my edge come from?",()=>{const j=journal(),bySes=group(j,"s"),bySet=group(j,"k"),best=bySes[0],worst=bySes[bySes.length-1];
         return {steps:["Load last 64 closed trades","Tag each by session and setup","Total R and win rate per tag","Rank strongest and weakest"],
-          answer:`<p>Your edge is the <strong>${best.name} session</strong> (${best.r>=0?"+":""}${best.r.toFixed(1)}R over ${best.n} trades). ${worst.name} is costing you ${worst.r.toFixed(1)}R; consider skipping it during a challenge.</p><div class="figs">${bySes.map(g=>fig(g.name+" · "+Math.round(g.w/g.n*100)+"% wins",(g.r>=0?"+":"")+g.r.toFixed(1)+"R",g.r>=0?"good":"bad")).join("")}</div><p>Best setup: <strong>${bySet[0].name}</strong> (${bySet[0].r>=0?"+":""}${bySet[0].r.toFixed(1)}R).</p>`,
+          answer:`<p>In this sample, your best results came in the <strong>${best.name} session</strong> (${best.r>=0?"+":""}${best.r.toFixed(1)}R over ${best.n} trades). ${worst.name} is costing you ${worst.r.toFixed(1)}R; consider skipping it during a challenge.</p><div class="figs">${bySes.map(g=>fig(g.name+" · "+Math.round(g.w/g.n*100)+"% wins",(g.r>=0?"+":"")+g.r.toFixed(1)+"R",g.r>=0?"good":"bad")).join("")}</div><p>Best setup: <strong>${bySet[0].name}</strong> (${bySet[0].r>=0?"+":""}${bySet[0].r.toFixed(1)}R).</p>`,
           sources:["Sample trade journal (64 trades)"],checks:["Commissions included","Open trades excluded"]}}],
       ["Which trades broke my risk plan?",()=>{const j=journal(),over=j.filter(t=>t.risk>0.5),cost=over.filter(t=>t.r<0).reduce((s,t)=>s+t.r,0);
         return {steps:["Load last 64 closed trades","Compare each trade's risk to your 0.5% plan","Total the losses from oversized trades"],
