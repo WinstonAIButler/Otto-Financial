@@ -20,7 +20,7 @@ Typed questions in the Otto Agents console go to `api/agent.js`, a Vercel server
 
 The page calls `api/jarvis.js`; the engine is `api/_jarvis-core.js`, an identical copy in every Joslin Enterprises repo, so change it there and copy it across. Set these in Vercel → Settings → Environment Variables, then redeploy:
 
-- `JARVIS_ACCESS_CODE` (required): the passphrase the page asks for. Jarvis stays locked until it's set.
+- `JARVIS_ACCESS_CODE` (optional): leave it empty and Jarvis opens for anyone with the link; set it to require a passphrase.
 - `ANTHROPIC_API_KEY`: Claude, for briefings and questions (the same key as Otto Agents).
 - `JARVIS_STRIPE_KEY`: a restricted Stripe key with Read on Balance, Charges, Subscriptions and Invoices.
 - `GITHUB_TOKEN`: a fine-grained token with read-only Contents, Pull requests and Deployments on this repo.

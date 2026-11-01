@@ -25,7 +25,7 @@ const DAY = 86400;
 /**
  * Build a single-company config from environment variables plus the
  * company's built-in description.
- *   JARVIS_ACCESS_CODE  required: the passphrase the page asks for
+ *   JARVIS_ACCESS_CODE  optional: if set, the page asks for it (Jarvis is open without it)
  *   ANTHROPIC_API_KEY   Claude, for the briefing and questions
  *   JARVIS_MODEL        optional, default claude-sonnet-5-5
  *   JARVIS_STRIPE_KEY   optional: a restricted read-only Stripe key (falls back to STRIPE_SECRET_KEY)
@@ -405,17 +405,18 @@ function setupReport(config) {
  * POST { action: "status" }              -> live snapshot
  * POST { action: "brief" }               -> snapshot + Claude's briefing
  * POST { action: "ask", messages: [...] } -> snapshot + Claude's answer
- * Every POST needs the access code in the x-jarvis-code header.
+ * Jarvis is open by default: with no access code set, anyone who can reach the page can use it.
+ * Setting JARVIS_ACCESS_CODE locks it again, and then every POST needs that code in the
+ * x-jarvis-code header.
  */
 export async function handleJarvis(req, config) {
   if (req.method === "GET") return { status: 200, body: setupReport(config) };
   if (req.method !== "POST") return { status: 405, body: { error: "Use GET or POST." } };
-  if (!config.accessCode) {
-    return { status: 503, body: { error: "Jarvis is locked until JARVIS_ACCESS_CODE is set in the hosting environment." } };
-  }
-  const given = header(req.headers, "x-jarvis-code");
-  if (!given || !sameSecret(given, config.accessCode)) {
-    return { status: 401, body: { error: "Wrong or missing access code." } };
+  if (config.accessCode) {
+    const given = header(req.headers, "x-jarvis-code");
+    if (!given || !sameSecret(given, config.accessCode)) {
+      return { status: 401, body: { error: "Wrong or missing access code." } };
+    }
   }
   let body = req.body;
   if (typeof body === "string") {
