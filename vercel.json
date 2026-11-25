@@ -2,6 +2,9 @@
   "functions": {
     "api/jarvis.js": {
       "maxDuration": 120
+    },
+    "api/quant.js": {
+      "maxDuration": 60
     }
   }
 }

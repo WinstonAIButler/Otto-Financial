@@ -10,6 +10,20 @@ All prices, rules and statistics are placeholders.
 
 Typed questions in the Otto Agents console go to `api/agent.js`, a Vercel serverless function that calls Claude. Set `ANTHROPIC_API_KEY` in the Vercel project's environment variables to turn it on (optionally `OTTO_AGENT_MODEL` to change the model). Without the key the function returns 503 and the page falls back to its built-in demo answers.
 
+## Otto Quant backtests
+
+Pressing **Generate algorithm** (or an example chip) sends the idea to `api/quant.js`. The endpoint:
+
+1. Turns the idea into exact, testable rules: entry, exit, stop, target and risk.
+2. Fetches real price history: 10 years of daily bars, or 2 years of hourly bars.
+3. Backtests the rules with fees and slippage, filling each order at the next bar's open.
+4. With an Otto Funded rule set chosen, runs a fresh evaluation from each month's start and reports how often it would have passed or failed.
+
+- With `ANTHROPIC_API_KEY` set, Claude drafts the rules; `OTTO_QUANT_MODEL` optionally changes the model. Without the key, built-in keyword patterns draft them. Either way, the rules are validated before testing.
+- Prices come from Yahoo Finance's public chart data, which is unofficial and rate-limited. If it's down, the page says so and falls back to the illustrative curve.
+- The engine is `api/_quant-kit`, a copy of Quant Kit. The master copy is in `~/Desktop/Joslin Enterprises/Joslin Quant/quant-kit`; change it there, run its tests, then copy it across with its `copy-into-app.sh`.
+- Results are hypothetical, and the page shows the disclaimer next to them. Nothing here places trades.
+
 ## SEO and AI visibility
 
 `robots.txt`, `sitemap.xml` and `llms.txt` sit at the repo root and are served as-is. JSON-LD (Organization, WebSite, WebPage, FAQPage) lives in the `<head>` of `index.html`; if you edit the FAQ, update the FAQPage block to match. Update `<lastmod>` in `sitemap.xml` when the page changes materially.
