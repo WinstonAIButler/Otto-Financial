@@ -214,6 +214,16 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 .spec pre{margin:0;padding:16px 18px;font:13px/1.6 var(--font-data);color:var(--silver);background:var(--bg-deep);overflow-x:auto;border-bottom:1px solid var(--line)}
 .spec .bt{padding:14px 18px;display:grid;gap:8px}
 .spec .bt p{font-size:.78rem;color:var(--muted)}
+.spec .btstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.spec .btstats div{background:var(--bg-deep);padding:8px 10px;min-width:0}
+.spec .btstats dt{padding:0;border:0;font-size:.7rem;letter-spacing:.04em}
+.spec .btstats dd{padding:2px 0 0;border:0;font-size:.95rem;color:var(--silver)}
+.spec .btstats .up{color:#63c79e}.spec .btstats .down{color:#e5826f}
+.spec .tested summary{cursor:pointer;font:500 .78rem/1.2 var(--font-data);color:var(--silver);padding:4px 0}
+.spec .tested dl{grid-template-columns:110px 1fr;margin-top:6px;border-top:1px solid var(--line)}
+.spec .tested dt,.spec .tested dd{padding:7px 0;font-size:.78rem}
+.spec .tested ul{margin:8px 0 0;padding-left:18px;font-size:.78rem;color:var(--muted)}
+@media (max-width:480px){.spec .btstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){.builder{grid-template-columns:1fr}}
 @media (max-width:480px){.spec dl{grid-template-columns:1fr}.spec dt{border-bottom:0;padding-bottom:0}.row2{grid-template-columns:1fr}}
 
@@ -599,7 +609,9 @@ footer strong{color:var(--silver)}
           <pre id="sCode"></pre>
           <div class="bt">
             <svg id="btChart" viewBox="0 0 560 120" role="img" aria-label="Sample backtest equity curve"></svg>
-            <p id="btNote">Illustrative sample curve generated in your browser. Not a real backtest and not indicative of future results.</p>
+            <p id="btNote">Illustrative sample curve generated in your browser. Press Generate algorithm to backtest your rules on real price history.</p>
+            <dl id="btStats" class="btstats" hidden></dl>
+            <details class="tested" id="btTested" hidden><summary>Exact rules tested</summary><dl id="sTested"></dl><ul id="btNotes"></ul></details>
           </div>
         </div>
       </div>
@@ -817,8 +829,8 @@ footer strong{color:var(--silver)}
   applyPreset();
 
   /* ---------- AI builder ---------- */
-  document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{$("#idea").value=c.dataset.idea;generate()});
-  $("#genBtn").onclick=generate;
+  document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{$("#idea").value=c.dataset.idea;generate(true)});
+  $("#genBtn").onclick=()=>generate(true);
   function detect(text){
     const t=text.toLowerCase();
     const mk=$("#market").value!=="auto"?$("#market").value:
@@ -830,7 +842,7 @@ footer strong{color:var(--silver)}
     const session=/london/.test(t)?"London 07:00–11:00 UTC":/new york|ny open/.test(t)?"New York 13:30–16:00 UTC":"All sessions";
     return {mk,style,risk,rr,tf,session};
   }
-  function generate(){
+  function generate(live){
     const s=detect($("#idea").value);
     const rs=$("#ruleset").value;
     const limits=rs.includes("Two")?{d:5,m:10}:rs.includes("One")?{d:3,m:6}:null;
@@ -853,7 +865,56 @@ footer strong{color:var(--silver)}
   exit     ${exitT}
   size     risk ${risk}% of balance
   guard    ${limits?`daily_loss < ${(limits.d*0.8).toFixed(1)}%, total_loss < ${(limits.m*0.8).toFixed(1)}%`:"losses_today < 3"}`;
-    drawBT(s);
+    if(live) runBacktest(); else drawBT(s);
+  }
+  /* Real backtest: /api/quant builds exact rules and tests them on real price history. */
+  let btSeq=0;
+  async function runBacktest(){
+    const seq=++btSeq,btn=$("#genBtn"),note=$("#btNote");
+    btn.disabled=true;note.textContent="Building exact rules and backtesting them on real price history…";
+    $("#btChart").innerHTML="";$("#btStats").hidden=true;$("#btTested").hidden=true;
+    try{
+      const r=await fetch("/api/quant",{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({idea:$("#idea").value.slice(0,1500),market:$("#market").value,ruleset:$("#ruleset").value})});
+      const d=await r.json().catch(()=>({error:"The backtest service didn't answer."}));
+      if(seq!==btSeq)return;
+      if(!r.ok||!d.stats)throw new Error(d.error||"The backtest failed.");
+      showBacktest(d);
+    }catch(e){
+      if(seq!==btSeq)return;
+      drawBT(detect($("#idea").value));
+      note.textContent=`Live backtest unavailable: ${e.message} Showing an illustrative sample curve instead. It is not a real backtest.`;
+    }finally{if(seq===btSeq)btn.disabled=false}
+  }
+  function showBacktest(d){
+    const st=d.stats,pct=x=>(x>0?"+":"")+x.toFixed(1)+"%",cls=x=>x>=0?"up":"down";
+    $("#sName").textContent=d.spec.name+" · "+d.marketLabel+" "+(d.spec.timeframe==="1d"?"D1":"H1");
+    $("#sCode").textContent=d.rows.map(r=>`${r[0].toLowerCase().padEnd(11)}${r[1]}`).join("\n");
+    drawEquity(d.equity);
+    const ch=d.challenge;
+    const cells=[["Return",pct(st.totalReturn),cls(st.totalReturn)],["Buy & hold",pct(st.buyHold),cls(st.buyHold)],["Max drawdown",pct(st.maxDrawdown),"down"],["Trades",String(st.trades)],
+      ["Win rate",st.winRate.toFixed(0)+"%"],["Avg trade",st.avgR==null?"–":(st.avgR>0?"+":"")+st.avgR+"R",st.avgR==null?"":cls(st.avgR)],["Sharpe",st.sharpe.toFixed(2)],
+      ch?["Challenge pass rate",ch.passRate.toFixed(0)+"%",ch.passRate>=50?"up":"down"]:["Time in market",st.exposure.toFixed(0)+"%"]];
+    $("#btStats").innerHTML=cells.map(c=>`<div><dt>${c[0]}</dt><dd${c[2]?` class="${c[2]}"`:""}>${esc(c[1])}</dd></div>`).join("");
+    $("#btStats").hidden=false;
+    $("#sTested").innerHTML=d.rows.map(r=>`<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join("");
+    $("#btNotes").innerHTML=[...d.notes,...d.warnings].map(n=>`<li>${esc(n)}</li>`).join("");
+    $("#btTested").hidden=false;
+    const chText=ch?` Starting a fresh ${esc($("#ruleset").value)} evaluation each month: ${ch.passRate.toFixed(0)}% passed, ${ch.failRate.toFixed(0)}% failed (${ch.failReasons.dailyLoss} daily-loss, ${ch.failReasons.maxLoss} max-loss), ${ch.openRate.toFixed(0)}% never finished.`:"";
+    $("#btNote").innerHTML=`Backtest on ${esc(d.marketLabel)} ${d.spec.timeframe==="1d"?"daily":"hourly"} bars, ${esc(d.from.slice(0,10))} to ${esc(d.to.slice(0,10))}, with fees and slippage.${chText} ${esc(d.disclaimer)}`;
+  }
+  function drawEquity(pts){
+    const W=560,H=120,n=pts.length,vals=pts.map(p=>p.equity),base=vals[0];
+    const lo=Math.min(...vals,base),hi=Math.max(...vals,base),span=(hi-lo)||1;
+    const x=i=>4+(W-8)*i/Math.max(n-1,1),y=v=>8+(H-24)*(hi-v)/span;
+    const line=vals.map((v,i)=>x(i).toFixed(1)+","+y(v).toFixed(1)).join(" "),last=vals[n-1],ret=100*(last/base-1);
+    $("#btChart").setAttribute("aria-label","Backtest equity curve, "+(ret>=0?"up ":"down ")+Math.abs(ret).toFixed(1)+"%");
+    $("#btChart").innerHTML=
+      `<line x1="4" x2="${W-4}" y1="${y(base)}" y2="${y(base)}" stroke="rgba(201,209,219,.25)" stroke-dasharray="2 4"/>`+
+      `<polygon points="${x(0)},${y(lo)} ${line} ${x(n-1)},${y(lo)}" fill="rgba(214,178,103,.12)"/>`+
+      `<polyline points="${line}" fill="none" stroke="#d6b267" stroke-width="1.8"/>`+
+      `<circle cx="${x(n-1)}" cy="${y(last)}" r="3.5" fill="#f1d896"/>`+
+      `<text x="${W-8}" y="${H-4}" text-anchor="end" fill="#a3b0c2" font-size="11" font-family="IBM Plex Mono,monospace">${ret>=0?"+":""}${ret.toFixed(1)}% · real backtest</text>`;
   }
   function drawBT(s){
     const R=rng(s.mk.length*31+s.style.length*7+Math.round(s.rr*10)),W=560,H=120,n=160;
